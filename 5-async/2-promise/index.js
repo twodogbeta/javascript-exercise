@@ -3,7 +3,16 @@ function fetchData(url) {
     const xhr = new XMLHttpRequest();
     // <-- start
     // TODO 22: 通过Promise实现异步请求
-
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status >= 200 && xhr.status <= 299) {
+        resolve(xhr.responseText);
+      } else if (xhr.readyState === 4 && xhr.status < 200 && xhr.status > 299) {
+        reject(xhr.responseText);
+      }
+    };
+    xhr.responseType = 'application/json';
+    xhr.open('GET', url, true);
+    xhr.send();
     // end -->
   });
 }
